@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Simple Polylines</title>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+
+function initMap() {
+  var gateGPS = {lat: 52.516288,lng:13.377689};
+  var startGPS = {lat: 52.434011, lng: 13.274099};
+  var stopGPS = {lat: 52.564011, lng: 13.554099};
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 3,
+    center: gateGPS,
+    mapTypeId: google.maps.MapTypeId.TERRAIN,
+    zoom:13
+  });
+  var marker = new google.maps.Marker({
+      position: gateGPS,
+      map: map,
+      label: 'Gate'
+    });
+  var marker = new google.maps.Marker({
+      position: startGPS,
+      map: map,
+      label: 'start'
+    });
+  var marker = new google.maps.Marker({
+      position: stopGPS,
+      map: map,
+      label: 'stop'
+    });
+
+  var riverGPS = [
+{lat: 52.529198, lng: 13.274099},
+{lat: 52.531835, lng: 13.29234},
+{lat: 52.522116, lng: 13.298541},
+{lat: 52.520569, lng: 13.317349},
+{lat: 52.524877, lng: 13.322434},
+{lat: 52.522788, lng: 13.329},
+{lat: 52.517056, lng: 13.332075},
+{lat: 52.522514, lng: 13.340743},
+{lat: 52.517239, lng: 13.356665},
+{lat: 52.523063, lng: 13.372158},
+{lat: 52.519198, lng: 13.379453},
+{lat: 52.522462, lng: 13.392328},
+{lat: 52.520921, lng: 13.399703},
+{lat: 52.515333, lng: 13.406054},
+{lat: 52.514863, lng: 13.416354},
+{lat: 52.506034, lng: 13.435923},
+{lat: 52.496473, lng: 13.461587},
+{lat: 52.487641, lng: 13.483216},
+{lat: 52.488739, lng: 13.491456},
+{lat: 52.464011, lng: 13.503386},
+];
+ var flightPath = new google.maps.Polyline({
+    path: riverGPS,
+    geodesic: true,
+    strokeColor: '#FF0000',
+    strokeOpacity: 1.0,
+    strokeWeight: 2
+  });
+
+  flightPath.setMap(map);
+
+  satelliteGPS = [
+  {lat:52.590117, lng:13.39915},
+  {lat:52.437385, lng:13.553989}
+  ];
+   var satPath = new google.maps.Polyline({
+    path: satelliteGPS,
+    geodesic: true,
+    strokeColor: '#FF0000',
+    strokeOpacity: 1.0,
+    strokeWeight: 2
+  });
+
+  satPath.setMap(map);
+
+var markers = [[ 52.505874,13.465642,1],
+[ 52.501383,13.473623,2],
+[ 52.510365,13.457661,3],
+[ 52.492400,13.489585,4],
+[ 52.496891,13.481604,5],
+[ 52.501383,13.465642,6],
+[ 52.496891,13.473623,7],
+[ 52.505874,13.457661,8],
+[ 52.505874,13.473623,9],
+];
+
+for (i = 0; i < markers.length; i++) {  
+    marker = new google.maps.Marker({
+        position: new google.maps.LatLng(markers[i][0], markers[i][1]),
+        map: map,
+        label: ''+markers[i][2],
+    });}
+
+
+}
+
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA87riG059bu_a7cXr4z5ZgthV7sfttntg&signed_in=true&callback=initMap"></script>
+  </body>
+</html>

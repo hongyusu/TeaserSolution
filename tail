@@ -1,0 +1,17 @@
+];
+
+for (i = 0; i < markers.length; i++) {  
+    marker = new google.maps.Marker({
+        position: new google.maps.LatLng(markers[i][0], markers[i][1]),
+        map: map,
+        label: ''+markers[i][2],
+    });}
+
+
+}
+
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA87riG059bu_a7cXr4z5ZgthV7sfttntg&signed_in=true&callback=initMap"></script>
+  </body>
+</html>
