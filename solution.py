@@ -168,6 +168,14 @@ def show_result(res):
   for line in open('tail') : s+=line
   open('map.html','w').write(s)
 
+def save_probability(res):
+  '''
+  save probability to file
+  '''
+  for i in range(res.shape[0]):
+    point = POS2GPS((res[i,0],res[i,1]))
+    res[i,0],res[i,1] = point[0],point[1]
+  np.savetxt('gpsdata.csv',res)
 
 def find_her():
   '''
@@ -185,6 +193,9 @@ def find_her():
 
   # compute statistics: x,y,dist_gate,prob_gate,dist_satellite,prob_satellite,dist_river,prob_river,sum of distance,joint probability
   res = compute_joint_probability(ss,gatePOS,satellitePOS,riverPOS)
+
+  # save probablity data to file
+  save_probability(res)
 
   # plot
   #plot_res(res)
