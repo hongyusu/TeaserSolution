@@ -95,7 +95,7 @@ def GPS2POS((lat,lng)):
   '''
   transform from GPS to coordinate system (POS)
   '''
-  return ((lng-startGPS[1]) * math.cos(startGPS[0]) * 111.323, (lat-startGPS[0]) * 111.323,)
+  return ((lng-startGPS[1]) * math.cos(startGPS[0]) * 111.323, (lat-startGPS[0]) * 111.323)
 
 def POS2GPS((x,y)):
   '''
@@ -127,10 +127,15 @@ def plot_res(res):
     rbf = scipy.interpolate.Rbf(x, y, z, function='linear')
     zi = rbf(xi, yi)
     # plot
-    subplot = plt.subplot(2, 4, ind)
-    subplot.set_title("%d" % ind)
+    subplot = plt.subplot(4, 2, ind)
+    if i%2 ==0:
+      subplot.set_title("Distance")
+    else:
+      subplot.set_title("Probability")
     subplot.imshow(zi, vmin=z.min(), vmax=z.max(), origin='lower',extent=[x.min(), x.max(), y.min(), y.max()])
     subplot.scatter(x, y, c=z)
+    subplot.set_xlabel('X')
+    subplot.set_ylabel('Y')
   plt.show()
   pass
 
@@ -156,7 +161,7 @@ def show_result(res):
   res    = res[np.lexsort((res[:,-1],))] # sort point by probability
   s      = ''
   for line in open('head') : s+=line
-  for i in range(1,10):
+  for i in range(1,6):
     pointGPS = POS2GPS((res[-i,0],res[-i,1]))
     print i,pointGPS,res[-i,[3,5,7,9]].tolist()
     s += '[ %.6f,%.6f,%d],\n' % (pointGPS[0],pointGPS[1],i)
@@ -173,6 +178,7 @@ def find_her():
   riverPOS,satellitePOS,gatePOS,startPOS,stopPOS = transformation(riverGPS,satelliteGPS,gateGPS,startGPS,stopGPS)
   
   # define a search space of points, with scale KM as interval
+  scale = 0.05
   scale = 0.5
   ss    = [(x,y) for x in np.arange(startPOS[0],stopPOS[0],-scale) for y in np.arange(startPOS[1],stopPOS[1],scale)]
   print "Number of sample points:\t", len(ss)
