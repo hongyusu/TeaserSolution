@@ -179,7 +179,7 @@ def find_her():
   
   # define a search space of points, with scale KM as interval
   scale = 0.05
-  scale = 0.5
+  #scale = 0.5
   ss    = [(x,y) for x in np.arange(startPOS[0],stopPOS[0],-scale) for y in np.arange(startPOS[1],stopPOS[1],scale)]
   print "Number of sample points:\t", len(ss)
 
@@ -187,7 +187,7 @@ def find_her():
   res = compute_joint_probability(ss,gatePOS,satellitePOS,riverPOS)
 
   # plot
-  plot_res(res)
+  #plot_res(res)
 
   # output
   show_result(res)
