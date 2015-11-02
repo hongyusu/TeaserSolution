@@ -1,6 +1,6 @@
 
 
-
+import copy
 import math
 import numpy as np
 from scipy.stats import norm
@@ -172,10 +172,11 @@ def save_probability(res):
   '''
   save probability to file
   '''
-  for i in range(res.shape[0]):
-    point = POS2GPS((res[i,0],res[i,1]))
-    res[i,0],res[i,1] = point[0],point[1]
-  np.savetxt('gpsdata.csv',res)
+  tmpres = copy.deepcopy(res)
+  for i in range(tmpres.shape[0]):
+    point = POS2GPS((tmpres[i,0],tmpres[i,1]))
+    tmpres[i,0],tmpres[i,1] = point[0],point[1]
+  np.savetxt('gpsdata.csv',tmpres)
 
 def find_her():
   '''
