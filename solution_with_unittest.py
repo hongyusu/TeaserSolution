@@ -224,6 +224,8 @@ def find_her():
   show_result(res)
 
   pass
+
+
 #--------------------- test with unittest ---------------------------
 class TestMethods(unittest.TestCase):
   '''
@@ -257,15 +259,18 @@ def test_GPS2POS():
 _globals = {'tmpPoint':None}
 
 def setup_test_GPS2POS():
+  '''setup function call for running nose test'''
   _globals['tmpPoint'] = (52.516288,13.377689)
   pass
 
 def teardown_test_GPS2POS():
+  '''tear down function call for running nose test'''
   _globals['tmpPoint'] = None
   pass
 
 @with_setup(setup_test_GPS2POS,teardown_test_GPS2POS)
 def test():
+  '''test function for executing nose test'''
   tmpPoint = _globals['tmpPoint']
   assert GPS2POS(tmpPoint) == (-6.48982764810209, 9.159322471000536)
 
@@ -276,20 +281,15 @@ if __name__ == '__main__':
 
   # doc test
   print "------------------- doctest -------------------"
-  doctest.testmod()
-
-  print "--------------- unittest fine tuned ------------"
-  suite = unittest.TestSuite()
-  suite.addTest(TestMethods('test_dist'))
-  suite.addTest(TestMethods('test_GPS2POS'))
-  unittest.TextTestRunner(verbosity=2).run(suite)
-
+  print "Run test with $python -m doctest -v solution_with_unittest.py\n"
+  # unittest
   print "--------------- unittest  -----------------------"
-  unittest.main()
-
+  print "Run test with $python -m unittest -v solution_with_unittest\n"
+  # nose
   print "--------------- nose  ---------------------------"
+  print "Run test with $nosetests -v solution_with_unittest.py\n"
 
 
   # run actual code
-  find_her() 
+  #find_her() 
   pass
