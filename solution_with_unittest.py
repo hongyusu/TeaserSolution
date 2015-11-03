@@ -20,6 +20,7 @@ import matplotlib.pylab as plt
 import scipy.interpolate
 from scipy.stats import norm
 from scipy.stats import lognorm
+from nose.tools import *
 
 # data as global variable
 riverGPS     =[
@@ -223,7 +224,7 @@ def find_her():
   show_result(res)
 
   pass
-
+#--------------------- test with unittest ---------------------------
 class TestMethods(unittest.TestCase):
   '''
   class to define a set of unit test with Python unittest module
@@ -240,6 +241,33 @@ class TestMethods(unittest.TestCase):
     self.assertEqual(GPS2POS((52.516288,13.377689)), (-6.48982764810209, 9.159322471000536))
   pass
   
+#--------------------- test with nose ---------------------------
+def test_dist():
+  '''unit test with nose'''
+  assert dist(-7.83434151195,17.378188238,-17.5348765366,0.375603802,-0.0,0.0) == 15.416540040627943
+  pass
+
+def test_GPS2POS():
+  '''unit test with nose'''
+  assert GPS2POS((52.516288,13.377689)) == (-6.48982764810209, 9.159322471000536)
+  pass
+
+
+#--------------------- test with nose: decorator ---------------------------
+_globals = {'tmpPoint':None}
+
+def setup_test_GPS2POS():
+  _globals['tmpPoint'] = (52.516288,13.377689)
+  pass
+
+def teardown_test_GPS2POS():
+  _globals['tmpPoint'] = None
+  pass
+
+@with_setup(setup_test_GPS2POS,teardown_test_GPS2POS)
+def test():
+  tmpPoint = _globals['tmpPoint']
+  assert GPS2POS(tmpPoint) == (-6.48982764810209, 9.159322471000536)
 
 if __name__ == '__main__':
   '''
@@ -258,6 +286,9 @@ if __name__ == '__main__':
 
   print "--------------- unittest  -----------------------"
   unittest.main()
+
+  print "--------------- nose  ---------------------------"
+
 
   # run actual code
   find_her() 
